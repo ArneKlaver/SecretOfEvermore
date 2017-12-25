@@ -6,7 +6,7 @@ public class Character {
     protected CharacterManager _characterManager;
     public GameObject CharacterObject;
 
-    public float speed = 0;
+    public float Speed = 0;
 
     public string Name = "";
     public int Health = 100;
@@ -18,6 +18,7 @@ public class Character {
     {
         _characterManager = characterManager;
         CharacterObject = characterObject;
+        Speed = speed;
     }
 
     public virtual void Start() { }
