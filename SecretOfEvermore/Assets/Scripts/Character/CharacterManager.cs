@@ -8,11 +8,6 @@ public class CharacterManager  {
     public List<Character> Enemies = new List<Character>();
     public Character SelectedCharacter = null;
 
-    public CharacterManager()
-    {
-
-    }
-
     public virtual void Start()
     {      
         // Start all characters in the list
@@ -27,7 +22,6 @@ public class CharacterManager  {
         {
             SwitchCharacters();
         }
-
         // update all characters in the list
         Characters.ForEach(character => character.Update());
         // update all Enemies in the list
@@ -50,10 +44,7 @@ public class CharacterManager  {
                 // set the new selected character
                 SelectedCharacter = character;
                 // set the camera to this character
-                Camera.main.transform.SetParent(SelectedCharacter.CharacterObject.transform);
-                Camera.main.transform.position = SelectedCharacter.CharacterObject.transform.Find("CameraSlot").transform.position;
                 CameraManager.ChangeCamera(SelectedCharacter);
-
                 return;
             }
         }
@@ -78,7 +69,7 @@ public class CharacterManager  {
         // if all players are death
         if (PlayerAlive == false)
         {
-            // TODO: Death screen
+            UIManager.OpenDeathScreen();
         }
     }
 }

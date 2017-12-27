@@ -33,7 +33,7 @@ public class Character {
     public virtual void Start() { }
 
     public virtual void Update() { }
-
+    //Character take damage dunction
     public virtual void TakeDamage(float damage)
     {
         // take damage ( takes defence into acount )
@@ -44,6 +44,7 @@ public class Character {
             Death();
         }
     }
+    //Character death function
     public virtual void Death()
     {
         _characterManager.Characters.Remove(this);

@@ -9,15 +9,19 @@ public class Inventory {
 
     public static Item SelectedWeapon;
     public static Item SelectedItem;
-    public static Item SelectedArmore;
+    public static Item SelectedArmor;
 
-    public static void AddItem(Item item)
-    {
-        Weapon.Add(item);
-    }
     public static void SetSelectdItem(string name)
     {
+        SelectedItem = Items.Find(x => (x.ItemName == name));
+    }
+    public static void SetSelectdWeapon(string name)
+    {
         SelectedWeapon = Weapon.Find(x => (x.ItemName == name));
+    }
+    public static void SetSelectdArmore(string name)
+    {
+        SelectedArmor = Armor.Find(x => (x.ItemName == name));
     }
     public static void ActivateSelectedItem()
     {

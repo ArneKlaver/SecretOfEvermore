@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 abstract public class EverMorePanel : MonoBehaviour {
-    GameObject _panelRoot;
+    protected GameObject _panelRoot;
+
 
     public void ActivatePanel()
     { _panelRoot.SetActive(true); }

@@ -14,7 +14,7 @@ public enum ItemType
 {
     NONE,
     WEAPON,
-    ARMORE,
+    ARMOR,
     ITEM
 }
 public class Item {

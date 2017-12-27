@@ -9,6 +9,7 @@ public class CharacterEnemyFlower : CharacterEnemy {
     {
         Damage = 10;
         AttackCooldown = 3;
+        AttackRange = 3;
     }
 
     public override void Update()

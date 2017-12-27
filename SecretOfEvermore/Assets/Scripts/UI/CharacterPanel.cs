@@ -34,7 +34,7 @@ public class CharacterPanel : EverMorePanel
     private Text _weaponText;
     private Text _ArmoreText;
 
-    private void Start()
+    public void Start()
     {
         _player = GameManager.GetCharacterManager().GetPlayer() as CharacterPlayer;
         //_dog = GameManager.GetCharacterManager().GetDog() as CharacterPlayer;
@@ -62,7 +62,9 @@ public class CharacterPanel : EverMorePanel
         // get the weapon and armore text
         _weaponText = RootObject.transform.Find("SelectedWeaponText").GetComponent<Text>();
         _ArmoreText = RootObject.transform.Find("SelectedArmorText").GetComponent<Text>();
+        UpdateStats();
     }
+    // update all the text with the character data
     public void UpdateStats()
     {
         _hPText.text = _player.Health.ToString();
@@ -79,14 +81,29 @@ public class CharacterPanel : EverMorePanel
         _evadeText.text = _player.Evade.ToString();
         _hitText.text = _player.HitChance.ToString();
     }
-    public void Item1Hovered(int buttonNumber)
+    public void WeaponHovered(int buttonNumber)
     {
-        // return if the item list is smaller then the button number
+        // return if the Weapon list is smaller then the button number
         if (Inventory.Weapon.Count <= buttonNumber)
             return;
-        
-        // get the item from the inventory
+
+        // get the Weapon from the inventory
         Item item = Inventory.Weapon[buttonNumber];
+        _hPUpgradeText.text = "+ " + item.UpgradeValues.MaxHealth.ToString();
+        _attackUpgradeText.text = "+ " + item.UpgradeValues.Attack.ToString();
+        _defendUpgradeText.text = "+ " + item.UpgradeValues.Defend.ToString();
+        _magicDefUpgradeText.text = "+ " + item.UpgradeValues.MagicDef.ToString();
+        _evadeUpgradeText.text = "+ " + item.UpgradeValues.Evade.ToString();
+        _hitUpgradeText.text = "+ " + item.UpgradeValues.Hit.ToString();
+    }
+    public void ArmoreHovered(int buttonNumber)
+    {
+        // return if the Armor list is smaller then the button number
+        if (Inventory.Armor.Count <= buttonNumber)
+            return;
+
+        // get the Armor from the inventory
+        Item item = Inventory.Armor[buttonNumber];
         _hPUpgradeText.text = "+ " + item.UpgradeValues.MaxHealth.ToString();
         _attackUpgradeText.text = "+ " + item.UpgradeValues.Attack.ToString();
         _defendUpgradeText.text = "+ " + item.UpgradeValues.Defend.ToString();
@@ -109,13 +126,14 @@ public class CharacterPanel : EverMorePanel
 
         Inventory.SelectedWeapon = item;
         _weaponText.text = item.ItemName;
+        UpdateStats();
     }
     public void OnClickedArmore(int buttonNumber)
     {
         if (Inventory.Armor.Count <= buttonNumber)
             return;
         Item item = Inventory.Armor[buttonNumber];
-        Item selectedArmore = Inventory.SelectedArmore;
+        Item selectedArmore = Inventory.SelectedArmor;
         _player.MaxHealth += item.UpgradeValues.MaxHealth - selectedArmore.UpgradeValues.MaxHealth;
         _player.AttackPower += item.UpgradeValues.Attack - selectedArmore.UpgradeValues.Attack;
         _player.DefendPower += item.UpgradeValues.Defend - selectedArmore.UpgradeValues.Defend;
@@ -123,8 +141,9 @@ public class CharacterPanel : EverMorePanel
         _player.Evade += item.UpgradeValues.Evade - selectedArmore.UpgradeValues.Evade;
         _player.HitChance += item.UpgradeValues.Hit - selectedArmore.UpgradeValues.Hit;
 
-        Inventory.SelectedWeapon = item;
+        Inventory.SelectedArmor = item;
         _ArmoreText.text = item.ItemName;
+        UpdateStats();
     }
     public void LeaveHover()
     {

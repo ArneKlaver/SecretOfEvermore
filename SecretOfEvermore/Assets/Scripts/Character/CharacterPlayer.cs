@@ -33,12 +33,26 @@ public class CharacterPlayer : Character {
         {
             CharacterObject.GetComponent<NavMeshAgent>().enabled = false;
             // controll this character
-            float movementX = Input.GetAxis("Horizontal") * Time.deltaTime * Speed;
-            float movementY = Input.GetAxis("Vertical") * Time.deltaTime * Speed;
-            CharacterObject.transform.Translate(movementX, 0, movementY, Space.World);
+            float movementX = Input.GetAxisRaw("Horizontal") * Time.deltaTime * Speed;
+            float movementY = Input.GetAxisRaw("Vertical") * Time.deltaTime * Speed;
+            // limit the speed
+            if (Input.GetButton("Horizontal") && Input.GetButton("Vertical"))
+            {
+                movementX /= 1.2f;
+                movementY /= 1.2f;
+            }
+            Vector3 movement = new Vector3(movementX, 0, movementY);
+
+            CharacterObject.transform.Translate(movement , Space.World );
+            // rotate character to move direction
+            if (movement != Vector3.zero)
+            {
+                CharacterObject.transform.rotation = Quaternion.LookRotation(movement);
+            }
         }
         else
         {
+            // let the navmesh controll the carachter
             CharacterObject.GetComponent<NavMeshAgent>().enabled = true;
             CharacterObject.GetComponent<NavMeshAgent>().SetDestination(_characterManager.SelectedCharacter.CharacterObject.transform.position);
         }
@@ -51,7 +65,7 @@ public class CharacterPlayer : Character {
     public override void Death()
     {
         IsDeath = true;
-        _characterManager.CheckArePlayersDeath();
+        UIManager.OpenDeathScreen();
     }
 
 }
