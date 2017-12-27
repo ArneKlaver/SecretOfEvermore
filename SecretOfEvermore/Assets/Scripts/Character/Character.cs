@@ -10,18 +10,47 @@ public class Character {
 
     public string Name = "";
     public int Health = 100;
-    public int Level = 0;
-    public int attack = 0;
-    public int def = 0;
+    public int MaxHealth = 100;
 
+    public int Stamina = 100;
+    public int Level = 0;
+    public int AttackPower = 0;
+    public int DefendPower = 0;
+    public int MagicDef = 0;
+    public int Evade = 0;
+    public int HitChance = 0; 
+
+    
     public Character(CharacterManager characterManager, GameObject characterObject, float speed)
     {
+        // set variables
         _characterManager = characterManager;
         CharacterObject = characterObject;
         Speed = speed;
+        CharacterObject.GetComponent<VisualCharacter>().Character = this;
     }
 
     public virtual void Start() { }
 
-   public virtual void Update() { }
+    public virtual void Update() { }
+
+    public virtual void TakeDamage(float damage)
+    {
+        // take damage ( takes defence into acount )
+        Health -= (int)(damage/100.0f*(100- DefendPower));
+        
+        if (Health <= 0)
+        {
+            Death();
+        }
+    }
+    public virtual void Death()
+    {
+        _characterManager.Characters.Remove(this);
+        _characterManager.Enemies.Remove(this);
+
+        GameObject.Destroy(CharacterObject);
+    }
+    public virtual void Attack()
+    { }
 }

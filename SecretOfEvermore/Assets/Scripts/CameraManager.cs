@@ -17,7 +17,7 @@ public class CameraManager {
 
     public void Update()
     {
-        Camera.main.transform.position = _targetObject.transform.position + new Vector3(0, CameraHeight, CameraDistance);
+        _camera.transform.position = _targetObject.transform.position + new Vector3(0, CameraHeight, CameraDistance);
     }
 
     public static void ChangeCamera(Character caracter)

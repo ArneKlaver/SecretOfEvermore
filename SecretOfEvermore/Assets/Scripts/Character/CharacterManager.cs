@@ -10,13 +10,16 @@ public class CharacterManager  {
 
     public CharacterManager()
     {
-        // update all characters in the list
-        Characters.ForEach(character => character.Start());
-        // update all Enemies in the list
-        Enemies.ForEach(enemy => enemy.Start());
+
     }
 
-    public virtual void Start() { }
+    public virtual void Start()
+    {      
+        // Start all characters in the list
+        Characters.ForEach(character => character.Start());
+        // Start all Enemies in the list
+        Enemies.ForEach(enemy => enemy.Start());
+    }
     public virtual void Update()
     {
         // switch characters at the frame the button is down
@@ -53,6 +56,29 @@ public class CharacterManager  {
 
                 return;
             }
+        }
+    }
+
+    // first value is the player
+    public Character GetPlayer() { return Characters[0]; }
+    // second value is the dog
+    public Character GetDog() { return Characters[1]; }
+
+    public void CheckArePlayersDeath()
+    {
+        // see if there is a player alive
+        bool PlayerAlive = false;
+        foreach (CharacterPlayer player in Characters)
+        {
+            if (player.IsDeath == false)
+            {
+                PlayerAlive = true;
+            }
+        }
+        // if all players are death
+        if (PlayerAlive == false)
+        {
+            // TODO: Death screen
         }
     }
 }
